@@ -966,7 +966,19 @@
     }
 
     @media (min-width: 769px) { .galeria-dots { display: none; } }
+    .presente-card { position: relative; }
+    .presente-card.presente-dado::after {
+      content: "✓ Já presenteado";
+      position: absolute; inset: 0;
+      background: rgba(74,94,50,0.82);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-sans); font-size: 0.8rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      border-radius: inherit; pointer-events: none;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -1202,7 +1214,7 @@
     </div>
 
     <div class="presentes-grid reveal">
-      <div class="presente-card" id="presente-01" data-nome="Contribuição para a lua de mel" data-valor="R$ 1.800">
+      <div class="presente-card" data-id="presente-01" id="presente-01" data-nome="Contribuição para a lua de mel" data-valor="R$ 1.800">
         <div class="presente-num">01</div>
         <div class="presente-info">
           <div class="presente-nome">✈️ Contribuição para a lua de mel</div>
@@ -1210,7 +1222,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('01', 'Contribuição para a lua de mel', 'R$ 1.800')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-02" data-nome="Robô aspirador inteligente" data-valor="R$ 1.700">
+      <div class="presente-card" data-id="presente-02" id="presente-02" data-nome="Robô aspirador inteligente" data-valor="R$ 1.700">
         <div class="presente-num">02</div>
         <div class="presente-info">
           <div class="presente-nome">🤖 Robô aspirador inteligente</div>
@@ -1218,7 +1230,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('02', 'Robô aspirador inteligente', 'R$ 1.700')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-03" data-nome="1 diária no Hotel Tivoli" data-valor="R$ 900">
+      <div class="presente-card" data-id="presente-03" id="presente-03" data-nome="1 diária no Hotel Tivoli" data-valor="R$ 900">
         <div class="presente-num">03</div>
         <div class="presente-info">
           <div class="presente-nome">🏨 1 diária no Hotel Tivoli</div>
@@ -1226,7 +1238,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('03', '1 diária no Hotel Tivoli', 'R$ 900')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-04" data-nome="Adega climatizada" data-valor="R$ 600">
+      <div class="presente-card" data-id="presente-04" id="presente-04" data-nome="Adega climatizada" data-valor="R$ 600">
         <div class="presente-num">04</div>
         <div class="presente-info">
           <div class="presente-nome">🍷 Adega climatizada</div>
@@ -1234,7 +1246,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('04', 'Adega climatizada', 'R$ 600')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-05" data-nome="Cafeteira espresso" data-valor="R$ 550">
+      <div class="presente-card" data-id="presente-05" id="presente-05" data-nome="Cafeteira espresso" data-valor="R$ 550">
         <div class="presente-num">05</div>
         <div class="presente-info">
           <div class="presente-nome">☕ Cafeteira espresso</div>
@@ -1242,7 +1254,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('05', 'Cafeteira espresso', 'R$ 550')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-06" data-nome="Airfryer 7L" data-valor="R$ 500">
+      <div class="presente-card" data-id="presente-06" id="presente-06" data-nome="Airfryer 7L" data-valor="R$ 500">
         <div class="presente-num">06</div>
         <div class="presente-info">
           <div class="presente-nome">🍟 Airfryer 7L</div>
@@ -1250,7 +1262,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('06', 'Airfryer 7L', 'R$ 500')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-07" data-nome="Jogo de panelas premium inox" data-valor="R$ 500">
+      <div class="presente-card" data-id="presente-07" id="presente-07" data-nome="Jogo de panelas premium inox" data-valor="R$ 500">
         <div class="presente-num">07</div>
         <div class="presente-info">
           <div class="presente-nome">🥘 Jogo de panelas premium inox</div>
@@ -1258,7 +1270,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('07', 'Jogo de panelas premium inox', 'R$ 500')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-08" data-nome="Processador de alimentos" data-valor="R$ 450">
+      <div class="presente-card" data-id="presente-08" id="presente-08" data-nome="Processador de alimentos" data-valor="R$ 450">
         <div class="presente-num">08</div>
         <div class="presente-info">
           <div class="presente-nome">🔪 Processador de alimentos</div>
@@ -1266,7 +1278,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('08', 'Processador de alimentos', 'R$ 450')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-09" data-nome="Jogo de cama king (fios egípcios)" data-valor="R$ 480">
+      <div class="presente-card" data-id="presente-09" id="presente-09" data-nome="Jogo de cama king (fios egípcios)" data-valor="R$ 480">
         <div class="presente-num">09</div>
         <div class="presente-info">
           <div class="presente-nome">🛏️ Jogo de cama king (fios egípcios)</div>
@@ -1274,7 +1286,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('09', 'Jogo de cama king (fios egípcios)', 'R$ 480')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-10" data-nome="Kit de facas profissionais" data-valor="R$ 320">
+      <div class="presente-card" data-id="presente-10" id="presente-10" data-nome="Kit de facas profissionais" data-valor="R$ 320">
         <div class="presente-num">10</div>
         <div class="presente-info">
           <div class="presente-nome">🔪 Kit de facas profissionais</div>
@@ -1282,7 +1294,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('10', 'Kit de facas profissionais', 'R$ 320')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-11" data-nome="3 meses de ração para os gatos" data-valor="R$ 300">
+      <div class="presente-card" data-id="presente-11" id="presente-11" data-nome="3 meses de ração para os gatos" data-valor="R$ 300">
         <div class="presente-num">11</div>
         <div class="presente-info">
           <div class="presente-nome">🐱 3 meses de ração para os gatos</div>
@@ -1290,7 +1302,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('11', '3 meses de ração para os gatos', 'R$ 300')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-12" data-nome="Tapete decorativo para sala" data-valor="R$ 280">
+      <div class="presente-card" data-id="presente-12" id="presente-12" data-nome="Tapete decorativo para sala" data-valor="R$ 280">
         <div class="presente-num">12</div>
         <div class="presente-info">
           <div class="presente-nome">🪴 Tapete decorativo para sala</div>
@@ -1298,7 +1310,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('12', 'Tapete decorativo para sala', 'R$ 280')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-13" data-nome="Jogo de taças de cristal (6 unid.)" data-valor="R$ 250">
+      <div class="presente-card" data-id="presente-13" id="presente-13" data-nome="Jogo de taças de cristal (6 unid.)" data-valor="R$ 250">
         <div class="presente-num">13</div>
         <div class="presente-info">
           <div class="presente-nome">🥂 Jogo de taças de cristal (6 unid.)</div>
@@ -1306,7 +1318,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('13', 'Jogo de taças de cristal (6 unid.)', 'R$ 250')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-14" data-nome="Kit spa do casal" data-valor="R$ 200">
+      <div class="presente-card" data-id="presente-14" id="presente-14" data-nome="Kit spa do casal" data-valor="R$ 200">
         <div class="presente-num">14</div>
         <div class="presente-info">
           <div class="presente-nome">🛁 Kit spa do casal</div>
@@ -1314,7 +1326,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('14', 'Kit spa do casal', 'R$ 200')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-15" data-nome="Quadro decorativo para sala" data-valor="R$ 220">
+      <div class="presente-card" data-id="presente-15" id="presente-15" data-nome="Quadro decorativo para sala" data-valor="R$ 220">
         <div class="presente-num">15</div>
         <div class="presente-info">
           <div class="presente-nome">🖼️ Quadro decorativo para sala</div>
@@ -1322,7 +1334,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('15', 'Quadro decorativo para sala', 'R$ 220')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-16" data-nome="Difusor elétrico + kit de óleos" data-valor="R$ 180">
+      <div class="presente-card" data-id="presente-16" id="presente-16" data-nome="Difusor elétrico + kit de óleos" data-valor="R$ 180">
         <div class="presente-num">16</div>
         <div class="presente-info">
           <div class="presente-nome">🌿 Difusor elétrico + kit de óleos</div>
@@ -1330,7 +1342,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('16', 'Difusor elétrico + kit de óleos', 'R$ 180')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-17" data-nome="1 garrafa de vinho especial" data-valor="R$ 180">
+      <div class="presente-card" data-id="presente-17" id="presente-17" data-nome="1 garrafa de vinho especial" data-valor="R$ 180">
         <div class="presente-num">17</div>
         <div class="presente-info">
           <div class="presente-nome">🍷 1 garrafa de vinho especial</div>
@@ -1338,7 +1350,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('17', '1 garrafa de vinho especial', 'R$ 180')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-18" data-nome="Manta de sofá luxo" data-valor="R$ 175">
+      <div class="presente-card" data-id="presente-18" id="presente-18" data-nome="Manta de sofá luxo" data-valor="R$ 175">
         <div class="presente-num">18</div>
         <div class="presente-info">
           <div class="presente-nome">🛋️ Manta de sofá luxo</div>
@@ -1346,7 +1358,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('18', 'Manta de sofá luxo', 'R$ 175')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-19" data-nome="Kit jardim — plantas + vasos" data-valor="R$ 175">
+      <div class="presente-card" data-id="presente-19" id="presente-19" data-nome="Kit jardim — plantas + vasos" data-valor="R$ 175">
         <div class="presente-num">19</div>
         <div class="presente-info">
           <div class="presente-nome">🌱 Kit jardim — plantas + vasos</div>
@@ -1354,7 +1366,7 @@
         </div>
         <button class="presente-btn" onclick="abrirModal('19', 'Kit jardim — plantas + vasos', 'R$ 175')">Presentear</button>
       </div>
-      <div class="presente-card" id="presente-20" data-nome="Reserva pro cachorro que a Isa vai querer adotar" data-valor="R$ 175">
+      <div class="presente-card" data-id="presente-20" id="presente-20" data-nome="Reserva pro cachorro que a Isa vai querer adotar" data-valor="R$ 175">
         <div class="presente-num">20</div>
         <div class="presente-info">
           <div class="presente-nome">🐶 Reserva pro cachorro que a Isa vai querer adotar</div>
@@ -1625,8 +1637,28 @@
     }
   }
 
+  // ---- Supabase ----
+  const _supabase = window.supabase.createClient(
+    'https://qumrbrruxjngbgvhonzr.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bXJicnJ1eGpuZ2JndmhvbnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNDIwNDYsImV4cCI6MjA2MTcxODA0Nn0.oIUSToqRiU5j6lkfxTWbabST0jRKAVIlbxBJ8TZOMUY'
+  );
+
   // ---- Presentes / Modal ----
   let presenteAtual = null;
+
+  async function carregarPresentesDados() {
+    const { data, error } = await _supabase
+      .from('casamento_presentes')
+      .select('id_presente')
+      .eq('presenteado', true);
+    if (error) { console.warn('Supabase load error:', error.message); return; }
+    (data || []).forEach(function(row) {
+      const card = document.querySelector('[data-id="' + row.id_presente + '"]');
+      if (card) card.classList.add('presente-dado');
+    });
+  }
+  carregarPresentesDados();
+
   function abrirModal(num, nome, valor) {
     presenteAtual = num;
     document.getElementById('modal-nome-presente').textContent = nome;
@@ -1641,22 +1673,28 @@
   }
   function copiarPix() {
     const key = document.getElementById('pix-key-text').textContent;
-    navigator.clipboard.writeText(key).then(() => {
+    navigator.clipboard.writeText(key).then(function() {
       const btn = document.querySelector('.copy-btn');
       btn.textContent = 'Copiado!';
-      setTimeout(() => btn.textContent = 'Copiar', 2000);
+      setTimeout(function() { btn.textContent = 'Copiar chave'; }, 2000);
     });
   }
-  function confirmarPresente() {
+  async function confirmarPresente() {
     if (presenteAtual) {
-      const card = document.getElementById('presente-' + presenteAtual);
-      if (card) card.classList.add('chosen');
+      const idPresente = 'presente-' + presenteAtual;
+      const { error } = await _supabase
+        .from('casamento_presentes')
+        .upsert({ id_presente: idPresente, presenteado: true }, { onConflict: 'id_presente' });
+      if (error) console.warn('Supabase upsert error:', error.message);
+      const card = document.querySelector('[data-id="' + idPresente + '"]');
+      if (card) card.classList.add('presente-dado');
     }
     fecharModal();
   }
   document.getElementById('modal-presente').addEventListener('click', function(e) {
     if (e.target === this) fecharModal();
   });
+
 
   // ---- RSVP ----
   const RSVP_KEY = 'casamento_isa_pedro_rsvp';
