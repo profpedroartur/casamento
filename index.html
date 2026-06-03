@@ -1431,10 +1431,6 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="rsvp-restricao">Restrição alimentar</label>
-          <input type="text" id="rsvp-restricao" placeholder="Ex: vegetariano, intolerância a lactose..." />
-        </div>
-        <div class="form-group">
           <label for="rsvp-msg">Mensagem para os noivos (opcional)</label>
           <textarea id="rsvp-msg" placeholder="Deixe um recado carinhoso..."></textarea>
         </div>
@@ -1721,10 +1717,9 @@
     const nome = document.getElementById('rsvp-nome').value.trim();
     if (!nome) { alert('Por favor, informe seu nome.'); return; }
     const acomp = document.getElementById('rsvp-acomp').value;
-    const restricao = document.getElementById('rsvp-restricao').value.trim();
     const msg = document.getElementById('rsvp-msg').value.trim();
     const lista = getRSVP();
-    lista.push({ nome, acomp, restricao, msg, ts: Date.now() });
+    lista.push({ nome, acomp, msg, ts: Date.now() });
     saveRSVP(lista);
     document.getElementById('rsvp-form-inner').style.display = 'none';
     document.getElementById('rsvp-success').style.display = 'block';
