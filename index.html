@@ -1638,56 +1638,36 @@
   }
 
   // ---- Supabase ----
-  console.log('[Supabase] inicializando cliente...');
-  const supabase = (typeof window.supabase !== 'undefined')
+  const _supabase = (typeof window.supabase !== 'undefined')
     ? window.supabase.createClient(
         'https://qumrbrruxjngbgvhonzr.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bXJicnJ1eGpuZ2JndmhvbnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNDIwNDYsImV4cCI6MjA2MTcxODA0Nn0.oIUSToqRiU5j6lkfxTWbabST0jRKAVIlbxBJ8TZOMUY'
       )
     : null;
-  if (!supabase) console.error('[Supabase] window.supabase não disponível — verifique o CDN');
-  else console.log('[Supabase] cliente inicializado com sucesso');
 
   // ---- Presentes / Modal ----
   let presenteAtual = null;
 
-  function marcarCardComoPresenteado(card) {
-    card.classList.add('presente-dado');
-    console.log('[Supabase] classe presente-dado aplicada em:', card.getAttribute('data-id'));
+  async function carregarPresentesDados() {
+    if (!_supabase) { console.warn('[Supabase] cliente não inicializado'); return; }
+    const { data, error } = await _supabase
+      .from('casamento_presentes')
+      .select('id_presente')
+      .eq('presenteado', true);
+    console.log('[Supabase] resposta:', { data, error });
+    if (error) { console.warn('[Supabase] erro ao carregar:', error.message); return; }
+    (data || []).forEach(function(row) {
+      const card = document.querySelector('[data-id="' + row.id_presente + '"]');
+      console.log('[Supabase] marcando', row.id_presente, '→ card:', card ? 'encontrado' : 'NÃO encontrado');
+      if (card) card.classList.add('presente-dado');
+    });
   }
 
-  async function carregarPresentesMarcados() {
-    console.log('[Supabase] carregarPresentesMarcados() chamada');
-    if (!supabase) { console.error('[Supabase] cliente não inicializado'); return; }
-    try {
-      const { data, error } = await supabase
-        .from('casamento_presentes')
-        .select('id_presente')
-        .eq('presenteado', true);
-
-      if (error) { console.error('[Supabase] erro ao carregar presentes:', error); return; }
-
-      console.log('[Supabase] presentes marcados:', data);
-
-      if (data && data.length > 0) {
-        data.forEach(function(item) {
-          const card = document.querySelector('[data-id="' + item.id_presente + '"]');
-          if (card) {
-            marcarCardComoPresenteado(card);
-          } else {
-            console.warn('[Supabase] card não encontrado para id:', item.id_presente);
-          }
-        });
-      }
-    } catch (err) {
-      console.error('[Supabase] erro inesperado:', err);
-    }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', carregarPresentesDados);
+  } else {
+    carregarPresentesDados();
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('[Supabase] DOMContentLoaded — chamando carregarPresentesMarcados()');
-    carregarPresentesMarcados();
-  });
 
   function abrirModal(num, nome, valor) {
     presenteAtual = num;
@@ -1712,17 +1692,12 @@
   async function confirmarPresente() {
     if (presenteAtual) {
       const idPresente = 'presente-' + presenteAtual;
-      console.log('[Supabase] salvando presente:', idPresente);
-      const { error } = await supabase
+      const { error } = await _supabase
         .from('casamento_presentes')
         .upsert({ id_presente: idPresente, presenteado: true }, { onConflict: 'id_presente' });
-      if (error) {
-        console.error('[Supabase] erro ao salvar presente:', error);
-      } else {
-        console.log('[Supabase] presente salvo com sucesso:', idPresente);
-        const card = document.querySelector('[data-id="' + idPresente + '"]');
-        if (card) marcarCardComoPresenteado(card);
-      }
+      if (error) console.warn('Supabase upsert error:', error.message);
+      const card = document.querySelector('[data-id="' + idPresente + '"]');
+      if (card) card.classList.add('presente-dado');
     }
     fecharModal();
   }
