@@ -1638,26 +1638,36 @@
   }
 
   // ---- Supabase ----
-  const _supabase = window.supabase.createClient(
-    'https://qumrbrruxjngbgvhonzr.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bXJicnJ1eGpuZ2JndmhvbnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNDIwNDYsImV4cCI6MjA2MTcxODA0Nn0.oIUSToqRiU5j6lkfxTWbabST0jRKAVIlbxBJ8TZOMUY'
-  );
+  const _supabase = (typeof window.supabase !== 'undefined')
+    ? window.supabase.createClient(
+        'https://qumrbrruxjngbgvhonzr.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF1bXJicnJ1eGpuZ2JndmhvbnpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNDIwNDYsImV4cCI6MjA2MTcxODA0Nn0.oIUSToqRiU5j6lkfxTWbabST0jRKAVIlbxBJ8TZOMUY'
+      )
+    : null;
 
   // ---- Presentes / Modal ----
   let presenteAtual = null;
 
   async function carregarPresentesDados() {
+    if (!_supabase) { console.warn('[Supabase] cliente não inicializado'); return; }
     const { data, error } = await _supabase
       .from('casamento_presentes')
       .select('id_presente')
       .eq('presenteado', true);
-    if (error) { console.warn('Supabase load error:', error.message); return; }
+    console.log('[Supabase] resposta:', { data, error });
+    if (error) { console.warn('[Supabase] erro ao carregar:', error.message); return; }
     (data || []).forEach(function(row) {
       const card = document.querySelector('[data-id="' + row.id_presente + '"]');
+      console.log('[Supabase] marcando', row.id_presente, '→ card:', card ? 'encontrado' : 'NÃO encontrado');
       if (card) card.classList.add('presente-dado');
     });
   }
-  carregarPresentesDados();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', carregarPresentesDados);
+  } else {
+    carregarPresentesDados();
+  }
 
   function abrirModal(num, nome, valor) {
     presenteAtual = num;
