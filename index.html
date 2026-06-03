@@ -1460,7 +1460,7 @@
     </div>
 
     <div class="rsvp-lista-toggle reveal">
-      <button class="btn-outline-white" onclick="toggleConfirmados()">Ver confirmados</button>
+      <a href="#presentes" class="btn-outline-white" onclick="event.preventDefault();document.getElementById('presentes').scrollIntoView({behavior:'smooth'});">Ver lista de presentes</a>
     </div>
     <div class="rsvp-confirmados" id="rsvp-confirmados"></div>
   </div>
