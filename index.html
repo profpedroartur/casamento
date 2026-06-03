@@ -205,6 +205,19 @@
       border-color: var(--ouro);
       color: var(--branco);
     }
+    .hero-cta-group {
+      display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; align-items: center;
+    }
+    .hero-cta-secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.8);
+    }
+    .hero-cta-secondary:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: rgba(255,255,255,0.7);
+      color: var(--branco);
+    }
     .hero-scroll {
       position: absolute;
       bottom: 2rem;
@@ -1011,7 +1024,10 @@
     <h1 class="hero-monogram">I<span>&</span>P</h1>
     <p class="hero-names">Isadora &amp; Pedro</p>
     <p class="hero-date">04 de Julho de 2026 &nbsp;·&nbsp; Belém, Pará</p>
-    <a href="#rsvp" class="hero-cta">Confirmar Presença</a>
+    <div class="hero-cta-group">
+      <a href="#rsvp" class="hero-cta">Confirmar Presença</a>
+      <a href="#presentes" class="hero-cta hero-cta-secondary">Ver Presentes</a>
+    </div>
   </div>
   <div class="hero-scroll">
     <span>Scroll</span>
